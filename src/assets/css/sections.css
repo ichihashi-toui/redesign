@@ -1,0 +1,84 @@
+/* 3Dモデルとはみ出し枠共通 */
+.model-showcase {
+    position: relative; width: 100%; height: 50vh; display: flex;
+    align-items: center; justify-content: center; margin-bottom: 40px;
+}
+@media screen and (min-width: 1024px) {
+    .model-showcase { width: 50%; height: 70vh; margin-bottom: 0; }
+}
+.model-showcase__frame {
+    position: absolute; top: 15%; bottom: 15%; left: 5%; right: 5%;
+    background-color: #fff; border: 1px solid #1D1D1D; z-index: 1;
+}
+.model-showcase__canvas {
+    position: relative; z-index: 2; width: 100%; height: 100%;
+    cursor: grab; touch-action: none;
+}
+.drag-guide {
+    position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);
+    background-color: rgba(29, 29, 29, 0.8); color: #fff; padding: 8px 20px;
+    border-radius: 30px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+    pointer-events: none; z-index: 10; animation: bounceGuide 2s infinite ease-in-out;
+}
+@keyframes bounceGuide {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -8px); }
+}
+
+/* Product Pickup & Artist Feature 共通レイアウト */
+.product-pickup .container, .artist-feature .container {
+    display: flex; flex-direction: column; align-items: center; gap: 40px; padding-top: 60px;
+}
+.product-info, .artist-info { width: 100%; text-align: center; }
+
+@media screen and (min-width: 1024px) {
+    .product-pickup .container { flex-direction: row; justify-content: center; gap: 80px; min-height: 80vh; padding-top: 0; }
+    .artist-feature .container { flex-direction: row; justify-content: space-between; gap: 40px; min-height: 80vh; padding-top: 0; }
+    
+    .product-info { width: 45%; text-align: left; padding-right: 5%; box-sizing: border-box; }
+    .artist-info { width: 45%; text-align: left; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
+}
+
+/* タイキスト周り */
+.title-handwritten, .artist-name { font-weight: 700; font-size: 3rem; line-height: 1.1; margin-bottom: 0.5rem; }
+@media screen and (min-width: 1024px) {
+    .title-handwritten, .artist-name { font-size: 4rem; }
+}
+
+/* カルーセル */
+.artist-carousel { width: calc(100% + 20px); margin-right: -20px; margin-top: 40px; padding-bottom: 40px; overflow: hidden; }
+@media screen and (min-width: 1024px) {
+    .artist-carousel { width: 100%; margin-top: 100px; margin-right: 0; overflow: visible; padding-top: 0; }
+}
+.swiper-slide.artist-card, .swiper-slide.artist-card-more {
+    width: auto; height: 175px; box-sizing: border-box; border: 1px solid #1a1a1a;
+    background: #fff; margin-right: 16px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; padding: 10px 15px; transition: transform 0.3s ease;
+}
+@media screen and (min-width: 1024px) {
+    .swiper-slide.artist-card, .swiper-slide.artist-card-more { width: 288px; height: 352px; padding: 30px 0; }
+    .artist-card__img { width: 224px; height: 224px; margin-bottom: 24px; }
+    .artist-card__role, .artist-card__name { width: 224px; text-align: left; }
+}
+.swiper-slide.artist-card-more { background: #1D1D1D; color: #fff; }
+
+/* Brand Philosophy */
+.brand-philosophy .container { display: flex; flex-direction: column-reverse; gap: 40px; }
+@media screen and (min-width: 1024px) {
+    .section.brand-philosophy { min-height: 100vh; display: flex; align-items: center; padding: 0; }
+    .brand-philosophy .container { flex-direction: row; justify-content: space-between; gap: 80px; height: 100%; }
+    .brand-text { width: 40%; text-align: left; order: 1; }
+    .brand-visual { width: 55%; order: 2; }
+}
+.brand-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+.brand-img-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+
+/* Onomato */
+.onomato__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+@media screen and (min-width: 1024px) {
+    .onomato .container { display: flex; flex-direction: column; align-items: center; padding-top: 40px; }
+    .onomato__logo { width: 390px; margin-bottom: 40px; order: 1; }
+    .onomato-desc { max-width: 700px; margin-bottom: 60px; text-align: center; order: 2; }
+    .onomato__grid { display: flex; justify-content: center; gap: 20px; max-width: 1000px; order: 3; }
+    .onomato-item { width: 220px; height: 220px; flex-shrink: 0; }
+}
