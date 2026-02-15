@@ -3,7 +3,7 @@
 @media screen and (min-width: 1024px) {
     .pc-header {
         display: block; position: fixed; top: 0; left: 0; width: 100%; height: 80px;
-        background-color: #ffffff; /* ここで白を指定 */
+        background-color: #ffffff;
         z-index: 9000; border-bottom: 1px solid #1a1a1a;
     }
     .pc-header__inner { display: flex; align-items: center; height: 100%; padding: 0 40px; }
@@ -13,6 +13,15 @@
     .pc-header__list { display: flex; gap: 30px; list-style: none; align-items: center; margin: 0; padding: 0; }
     .pc-header__list a { opacity: 1; transition: opacity 0.3s; display: block; }
     .pc-header__list a:hover { opacity: 0.6; }
+    
+    /* ▼追加：ヘッダーのメニュー画像サイズを元に戻す */
+    .pc-header__list .pc-menu-item-devices img { width: 60px; transform: translateY(-1px); }
+    .pc-header__list .pc-menu-item-artists img { width: 57px; transform: translateY(0px); }
+    .pc-header__list .pc-menu-item-demo img { width: 42px; transform: translateY(3px); }
+    .pc-header__list .pc-menu-item-brand img { width: 48px; transform: translateY(4px); }
+    .pc-header__list .pc-menu-item-support img { width: 56px; transform: translateY(4px); }
+    .pc-header__list .pc-menu-item-dealers img { width: 58px; transform: translateY(2px); }
+
     .pc-header__search { display: flex; align-items: center; border-bottom: 1px solid #1a1a1a; padding-bottom: 5px; gap: 10px; }
     .pc-header__search input { border: none; outline: none; font-size: 14px; width: 160px; font-family: inherit; }
     .pc-header__search button { background: none; border: none; cursor: pointer; padding: 0; }
@@ -22,12 +31,15 @@
         color: #1a1a1a; border: 1px solid #1a1a1a; padding: 8px 16px; transition: 0.3s; white-space: nowrap;
     }
     .btn-official-pc:hover { background-color: #1a1a1a; color: #fff; }
+
+    /* ▼追加：PC表示時にFVの巨大ロゴを隠す */
+    .main-logo-container { display: none !important; }
 }
 
 /* SP Header */
 .header {
     position: fixed; bottom: 0; left: 0; width: 100%; height: 60px;
-    background-color: #ffffff; /* ここで白を指定 */
+    background-color: #ffffff;
     border-top: 1px solid #ddd; display: flex; justify-content: space-between;
     align-items: center; padding-left: var(--sp-margin); z-index: 9999;
 }
@@ -61,25 +73,32 @@
 
 /* Footer */
 .footer {
-    background-color: #ffffff; /* ここで白を指定 */
+    background-color: #ffffff;
     color: #1D1D1D; padding-top: 60px; padding-bottom: 60px;
 }
+/* ▼追加：フッターのリンク画像サイズを元に戻す */
+.footer-link img { width: auto; height: auto; display: block; }
+.item-devices img { width: 104px; }
+.item-artists img { width: 106px; }
+.item-brand img { width: 84px; }
+.item-demo img { width: 83px; }
+.item-support img { width: 108px; }
+.item-dealers img { width: 98px; }
+
+.footer-top-logo { width: 280px; max-width: 100%; margin: 0 0 50px 0; }
+.footer-nav-grid { display: grid; grid-template-columns: auto auto; gap: 40px 30px; margin-bottom: 60px; }
+
+/* ▼修正：PC表示時のフッターのレイアウト崩れを直す（ロゴを右上に絶対配置） */
 @media screen and (min-width: 1024px) {
     .footer { padding-top: 200px; padding-bottom: 100px; }
-    .footer .container { min-height: 260px; }
-}
-.footer-top-logo { width: 280px; max-width: 100%; margin: 0 0 50px 0; }
-@media screen and (min-width: 1024px) {
-    .footer-top-logo { position: absolute; top: -10px; right: 190px; width: 360px; margin: 0; text-align: right; }
-}
-.footer-nav-grid { display: grid; grid-template-columns: auto auto; gap: 40px 30px; margin-bottom: 60px; }
-@media screen and (min-width: 1024px) {
+    .footer .container { display: block; position: relative; min-height: 260px; }
     .footer-nav-grid { width: 55%; grid-template-columns: repeat(3, 1fr); margin-bottom: 0; }
+    .footer-top-logo { position: absolute; top: -10px; right: 190px; width: 360px; margin: 0; text-align: right; display: block; }
+    .footer-top-logo img { width: 100%; }
+    .footer-bottom-info { position: absolute; bottom: 0; right: 190px; text-align: right; width: auto; }
 }
+
 .footer-bottom-info { text-align: right; }
-@media screen and (min-width: 1024px) {
-    .footer-bottom-info { position: absolute; bottom: 0; right: 190px; }
-}
 .footer-social-row { display: flex; justify-content: flex-end; gap: 24px; }
 .footer-social-row img { width: 48px; height: 48px; transition: opacity 0.3s; }
 .footer-social-row a:hover img { opacity: 0.7; }

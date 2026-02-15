@@ -1,3 +1,84 @@
+/* =======================================================
+   FV (物理演算 + 情報パネル) & オープニング
+   ======================================================= */
+.fv-container {
+    width: 100%; height: 100vh; display: flex; flex-direction: column;
+    overflow: hidden; position: relative; background-color: var(--color-bg);
+}
+#fv-canvas-container {
+    width: 100%; flex: 6; position: relative; overflow: hidden; border-bottom: 1px solid #ddd;
+}
+.fv-info {
+    width: 100%; flex: 4; background-color: #fff; padding: 20px; display: flex;
+    flex-direction: column; justify-content: center; align-items: center; text-align: center;
+    position: relative; z-index: 10;
+}
+.fv-info__default, .fv-info__content {
+    display: none; width: 100%; animation: fadeInSimple 0.6s ease;
+}
+.fv-info__default.is-active, .fv-info__content.is-active {
+    display: block; transform: translateY(-48px);
+}
+.fv-info__msg {
+    font-size: 1.5rem; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 10px; font-family: var(--font-base);
+}
+.fv-info__sub { font-size: 0.8rem; color: #888; line-height: 1.5; }
+.fv-info__name {
+    font-family: var(--font-base); font-size: 2rem; font-weight: 700; margin-bottom: 5px; line-height: 1.1;
+}
+.fv-info__cat { font-family: var(--font-base); font-size: 16px; color: #666; margin-bottom: 20px; }
+.fv-info__actions { display: flex; align-items: center; justify-content: center; gap: 20px; }
+.btn--sm { padding: 10px 24px; font-size: 0.85rem; }
+.btn-circle {
+    width: 45px; height: 45px; border-radius: 50%; background-color: #1a1a1a; color: #fff;
+    border: none; display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    cursor: pointer; transition: transform 0.2s;
+}
+.btn-circle:active { transform: scale(0.95); }
+@keyframes fadeInSimple { from { opacity: 0; } to { opacity: 1; } }
+
+.main-logo-container {
+    position: absolute; top: 128px; left: 0; width: 100%; z-index: 20;
+    pointer-events: none; padding: 0 20px; box-sizing: border-box; text-align: center;
+}
+.main-logo img { width: 100%; height: auto; max-width: 100%; }
+
+#opening-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #ffffff;
+    z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 1.0s ease;
+}
+#opening-overlay.is-hidden { opacity: 0; pointer-events: none; }
+#opening-video { width: 100%; height: 100%; object-fit: cover; }
+
+/* =======================================================
+   Crack Transition (画面遷移)
+   ======================================================= */
+.crack-transition {
+    width: 100%; height: 100vh; position: relative; overflow: hidden;
+    line-height: 0; margin-bottom: -1px; margin-top: -1px;
+}
+#sequence-crack { width: 100%; height: 100%; display: block; margin: 0 auto; object-fit: cover; }
+
+/* =======================================================
+   FV & 遷移アニメーションのレスポンシブ (PC・タブレット)
+   ======================================================= */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    .fv-info__msg { font-size: 2rem; }
+    .fv-info__name { font-size: 2.5rem; }
+}
+
+@media screen and (min-width: 1024px) {
+    .fv-container { height: calc(100vh - 80px); margin-top: 80px; flex-direction: row; }
+    #fv-canvas-container { flex: 6; border-bottom: none; border-right: 1px solid #ddd; }
+    .fv-info { flex: 4; padding: 60px; align-items: flex-start; text-align: left; justify-content: center; }
+    .fv-info__msg { font-size: 2rem; margin-bottom: 20px; }
+    .fv-info__sub { font-size: 1rem; }
+    .fv-info__name { font-size: 3rem; margin-bottom: 10px; line-height: 1.1; }
+    .fv-info__cat { font-size: 1.2rem; margin-bottom: 30px; }
+    .fv-info__actions { justify-content: flex-start; }
+    #opening-video { width: 500px; height: auto; object-fit: contain; }
+}
+
 /* 3Dモデルとはみ出し枠共通 */
 .model-showcase {
     position: relative; width: 100%; height: 50vh; display: flex;

@@ -61,16 +61,13 @@ a:hover { opacity: 0.7; }
 
 /* 共通パーツ */
 .bg-dark {
-    background: linear-gradient(45deg, #111111, #1a1a24, #0f1714, #111111);
-    background-size: 300% 300%;
-    animation: gradientBg 20s ease infinite;
+    /* ▼修正：遷移ビデオの背景色に合わせて一段暗い色に統一します */
+    background-color: #1a1a1a; 
     color: #FFFFFF;
-    padding-top: 80px; padding-bottom: 80px; margin-bottom: 0; margin-top: -1px;
-}
-@keyframes gradientBg {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    padding-top: 80px; 
+    padding-bottom: 80px; 
+    margin-bottom: 0; 
+    margin-top: -1px;
 }
 
 .btn-wrapper { text-align: center; width: 100%; margin-top: 2rem; }
