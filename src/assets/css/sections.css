@@ -228,11 +228,53 @@
   .artist-feature .model-showcase { order: 1 !important; }
   .artist-feature .artist-info { order: 2 !important; }
   .artist-carousel-wrapper { order: 3 !important; }
-  .product-info, .artist-info { width: 100% !important; text-align: center !important; display: flex; flex-direction: column; align-items: center; }
-  .product-info .product-desc, .product-info .product-category { text-align: center !important; }
-  .product-info .btn-wrapper { text-align: center !important; margin-top: 30px; }  .onomato__logo { width: 160px !important; margin: 0 auto 30px; display: block; }
+
+  /* 徹底的に中央寄せ (プロダクト & アーティスト) */
+  .product-info, .artist-info { 
+      width: 100% !important; 
+      display: flex !important; 
+      flex-direction: column !important; 
+      align-items: center !important; 
+      text-align: center !important; 
+  }
+  
+  /* 内側のすべてのテキストを強制的に中央揃えにする */
+  .product-info *, .artist-info * {
+      text-align: center !important;
+  }
+
+  /* ボタンも確実に中央に配置する */
+  .product-info .btn-wrapper, .artist-info .btn-wrapper { 
+      margin-top: 30px !important; 
+      width: 100% !important; 
+      display: flex !important; 
+      justify-content: center !important; 
+  }
+
+  /* BRAND(ブランド)とONOMATOの中央寄せ */
+  .brand-text { 
+      width: 100% !important; 
+      display: flex !important; 
+      flex-direction: column !important; 
+      align-items: center !important; 
+      text-align: center !important; 
+  }
+  
+  .brand-text * { 
+      text-align: center !important; 
+  }
+  
+  .brand-text .btn-wrapper { 
+      margin-top: 30px !important; 
+      width: 100% !important; 
+      display: flex !important; 
+      justify-content: center !important; 
+  }
+  .onomato-desc { text-align: center !important; margin-left: auto; margin-right: auto; }
+
+  .onomato__logo { width: 160px !important; margin: 0 auto 30px; display: block; }
   .model-showcase { width: 100%; height: 500px !important; margin: 0 auto; }
-  .title-handwritten, .artist-name { font-size: 3.5rem !important; }
+  .title-handwritten, .artist-name { font-size: 3.5rem !important; text-align: center !important; }
 }
 
 /* =======================================================
