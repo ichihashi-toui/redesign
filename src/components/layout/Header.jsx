@@ -1,11 +1,9 @@
 // src/components/layout/Header.jsx
 import React from 'react';
 
-// App.jsxから「メニューが開いているか」と「開閉する関数」を受け取ります
 const Header = ({ isMenuOpen, toggleMenu }) => {
   return (
     <>
-      {/* PCサイズの時に上部に表示されるヘッダー */}
       <header className="pc-header">
         <div className="pc-header__inner">
           <div className="pc-header__logo">
@@ -31,13 +29,11 @@ const Header = ({ isMenuOpen, toggleMenu }) => {
         </div>
       </header>
 
-      {/* スマホサイズの時に下部に固定されるヘッダー */}
       <header className="header">
         <div className="header__current-section">
           <img src="/img/typography/devices.svg" alt="Devices" />
         </div>
         
-        {/* ボタンをクリックした時に toggleMenu を実行します */}
         <button 
           className={`header__menu-btn ${isMenuOpen ? 'is-active' : ''}`} 
           onClick={toggleMenu}

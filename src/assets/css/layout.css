@@ -13,8 +13,6 @@
     .pc-header__list { display: flex; gap: 30px; list-style: none; align-items: center; margin: 0; padding: 0; }
     .pc-header__list a { opacity: 1; transition: opacity 0.3s; display: block; }
     .pc-header__list a:hover { opacity: 0.6; }
-    
-    /* ▼追加：ヘッダーのメニュー画像サイズを元に戻す */
     .pc-header__list .pc-menu-item-devices img { width: 60px; transform: translateY(-1px); }
     .pc-header__list .pc-menu-item-artists img { width: 57px; transform: translateY(0px); }
     .pc-header__list .pc-menu-item-demo img { width: 42px; transform: translateY(3px); }
@@ -31,8 +29,6 @@
         color: #1a1a1a; border: 1px solid #1a1a1a; padding: 8px 16px; transition: 0.3s; white-space: nowrap;
     }
     .btn-official-pc:hover { background-color: #1a1a1a; color: #fff; }
-
-    /* ▼追加：PC表示時にFVの巨大ロゴを隠す */
     .main-logo-container { display: none !important; }
 }
 
@@ -76,7 +72,6 @@
     background-color: #ffffff;
     color: #1D1D1D; padding-top: 60px; padding-bottom: 60px;
 }
-/* ▼追加：フッターのリンク画像サイズを元に戻す */
 .footer-link img { width: auto; height: auto; display: block; }
 .item-devices img { width: 104px; }
 .item-artists img { width: 106px; }
@@ -87,8 +82,6 @@
 
 .footer-top-logo { width: 280px; max-width: 100%; margin: 0 0 50px 0; }
 .footer-nav-grid { display: grid; grid-template-columns: auto auto; gap: 40px 30px; margin-bottom: 60px; }
-
-/* ▼修正：PC表示時のフッターのレイアウト崩れを直す（ロゴを右上に絶対配置） */
 @media screen and (min-width: 1024px) {
     .footer { padding-top: 200px; padding-bottom: 100px; }
     .footer .container { display: block; position: relative; min-height: 260px; }

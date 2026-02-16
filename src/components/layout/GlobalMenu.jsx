@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 
 const GlobalMenu = ({ isActive }) => {
-  // メニューが開いている時は背景をスクロールできないようにロックします
   useEffect(() => {
     if (isActive) {
       document.body.style.overflow = 'hidden';

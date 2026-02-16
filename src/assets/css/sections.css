@@ -1,16 +1,16 @@
 @charset "UTF-8";
 
 /* =======================================================
-   0. ヘッダー調整 (PC表示の上揃え・ガタつき解消)
+   0. ヘッダー調整
    ======================================================= */
 .pc-header__nav, 
 .pc-header__nav ul {
     display: flex !important;
-    align-items: flex-start !important; /* 要素を上で揃える */
+    align-items: flex-start !important; 
 }
 
 /* =======================================================
-   1. FV (物理演算 + 情報パネル) & オープニング
+   1. FV 
    ======================================================= */
 .fv-container {
     width: 100%; height: 100vh; display: flex; flex-direction: column;
@@ -63,7 +63,7 @@
 #opening-video { width: 100%; height: 100%; object-fit: cover; }
 
 /* =======================================================
-   2. Crack Transition (画面遷移)
+   2. Crack Transition 
    ======================================================= */
 .crack-transition {
     width: 100%; height: 100vh; position: relative; overflow: hidden;
@@ -99,25 +99,22 @@
 .fade-in-canvas { animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; opacity: 0; }
 
 /* =======================================================
-   5. モデル表示エリア (ズレの根本修正：絶対中央配置)
+   5. モデル表示エリア
    ======================================================= */
 .model-showcase {
     position: relative; width: 100%; height: 50vh; display: flex;
     align-items: center; justify-content: center; margin-bottom: 40px;
-    overflow: visible; /* 巨大化したモデルが枠からはみ出せるように */
+    overflow: visible; 
 }
 .model-showcase__frame {
     position: absolute; top: 15%; bottom: 15%; left: 5%; right: 5%;
     background-color: #fff; border: 1px solid #1D1D1D; z-index: 1;
 }
 
-/* 🌟修正：1.4倍固定 ＆ 右下ズレを絶対に起こさない中央ピン留め設定 */
 .model-showcase__canvas {
-    position: absolute; /* 親(model-showcase)に対して絶対配置 */
+    position: absolute; 
     width: 100%; height: 100%;
     z-index: 2; cursor: grab; touch-action: none;
-    
-    /* 🌟 scale(1.4)で固定。translate(-50%, -50%)で中心を維持し、ズレを封じ込める */
     transform-origin: center center !important;
     transform: scale(1); 
 }
@@ -180,8 +177,6 @@
 .brand-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
 .brand-img-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
 .onomato__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
-
-/* 🌟修正：distributor-text にマージンを追加 */
 .distributor-text { margin-bottom: 10px; }
 
 /* =======================================================
@@ -233,15 +228,10 @@
   .artist-feature .model-showcase { order: 1 !important; }
   .artist-feature .artist-info { order: 2 !important; }
   .artist-carousel-wrapper { order: 3 !important; }
-
-  /* 🌟修正：product-info も左揃えに統一 */
   .product-info, .artist-info { width: 100% !important; text-align: left !important; display: flex; flex-direction: column; align-items: flex-start; }
   .product-info .product-desc, .product-info .product-category { text-align: left !important; }
   .product-info .btn-wrapper { text-align: left !important; margin-top: 30px; }
-
-  /* 🌟修正：onomatoロゴ縮小(160px) */
   .onomato__logo { width: 160px !important; margin: 0 auto 30px; display: block; }
-
   .model-showcase { width: 100%; height: 500px !important; margin: 0 auto; }
   .title-handwritten, .artist-name { font-size: 3.5rem !important; }
 }
@@ -258,7 +248,6 @@
   .swiper-slide.artist-card, .swiper-slide.artist-card-more {
       width: 30% !important; padding: 10px !important; margin-right: 10px !important; min-width: 100px;
   }
-  /* 🌟スマホ版の画像も四角に調整。高さを100pxから、正方形に見えるサイズ(60px)に変更 */
   .artist-card__img { 
       width: 100% !important; height: 200px !important; 
       border-radius: 4px; 

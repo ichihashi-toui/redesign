@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-/* 分割したファイルを読み込む */
+
 @import url('./css/base.css');
 @import url('./css/layout.css');
 @import url('./css/sections.css');

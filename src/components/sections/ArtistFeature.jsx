@@ -53,10 +53,8 @@ const ArtistFeature = () => {
 
   return (
     <section className="section artist-feature bg-light" ref={sectionRef}>
-      {/* 🌟 alignItems を 'center' に戻して、縦位置を合わせます */}
       <div className="container" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', minHeight: '80vh' }}>
 
-        {/* 左側：製品情報エリア（カルーセルはここから出します） */}
         <div className="artist-info" style={{ width: '45%', textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingTop: '0', height: 'auto' }}>
           <p className="artist-role gary-anim" style={{ textAlign: 'left', fontWeight: 'bold', marginBottom: '5px' }}>signature model</p>
           <h2 className="artist-name gary-anim" style={{ textAlign: 'left', fontSize: '4rem', marginBottom: '10px' }}>GARY</h2>
@@ -71,7 +69,6 @@ const ArtistFeature = () => {
           </div>
         </div>
 
-        {/* 右側：3Dモデルとはみ出し枠のエリア */}
         <div className="model-showcase">
           <div className="model-showcase__frame"></div>
           <div className="model-showcase__canvas canvas-anim">
@@ -83,7 +80,6 @@ const ArtistFeature = () => {
           </div>
         </div>
         
-        {/* 🌟 カルーセルを一番下の元の位置に戻しました */}
         <div className="artist-carousel-wrapper gary-anim" style={{ width: '100%', marginTop: '80px' }}>
           <Swiper 
             modules={[Pagination, FreeMode, Navigation]}
@@ -94,7 +90,6 @@ const ArtistFeature = () => {
             navigation={true}
             className="artist-carousel"
           >
-            {/* スライド */}
             <SwiperSlide className="artist-card">
               <div className="artist-card__img"><img src="/img/artists/nakao.webp" alt="中尾憲太郎" /></div>
               <p className="artist-card__role">Bassist</p>

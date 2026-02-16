@@ -30,7 +30,7 @@ const HeroPhysics = ({ onSelect }) => {
   const ballsData = useMemo(() => {
     const totalBalls = 300; 
     const cols = 15; 
-    const spacingX = 0.75; // 🌟 密度をさらに高めるため間隔を微調整
+    const spacingX = 0.75;
     const spacingZ = 0.75;
     
     const startX = -((cols - 1) * spacingX) / 2;
@@ -45,8 +45,6 @@ const HeroPhysics = ({ onSelect }) => {
         id: `ball-${i}`,
         data: PEDAL_LIST[modelIndex],
         modelIndex: modelIndex,
-        // 🌟 修正ポイント：高さ（y座標）を空中ではなく「床の直上（-2.05）」に設定
-        // わずかにランダムな高さを足して、自然な重なり感を出します
         position: [
           startX + col * spacingX + (Math.random() - 0.5) * 0.2, 
           -2.05 + (Math.random() * 0.3), 
@@ -90,8 +88,8 @@ const HeroPhysics = ({ onSelect }) => {
               position={ball.position} 
               rotation={ball.rotation} 
               restitution={0}     
-              friction={3.0}       // 🌟 摩擦を上げて滑りを防止
-              linearDamping={15.0} // 🌟 空気抵抗をMAXにして、出現直後にピタッと静止させます
+              friction={3.0}      
+              linearDamping={15.0} 
               angularDamping={15.0}
               canSleep={true} 
             >

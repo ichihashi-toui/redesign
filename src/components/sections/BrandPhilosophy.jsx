@@ -13,7 +13,6 @@ const BrandPhilosophy = () => {
     const section = sectionRef.current;
     if (!section) return;
 
-    // スクロールに合わせてテキストがフワッと現れる動き
     const fadeText = section.querySelector('.js-fade');
     if (fadeText) {
       gsap.fromTo(fadeText, 
@@ -34,7 +33,6 @@ const BrandPhilosophy = () => {
 
     let mm = gsap.matchMedia();
 
-    // PC用：写真がランダムにフワフワと浮遊する動き
     mm.add("(min-width: 1024px)", () => {
       gsap.utils.toArray('.float-anim').forEach((el) => {
         gsap.to(el, {
@@ -58,7 +56,6 @@ const BrandPhilosophy = () => {
       });
     });
 
-    // スマホ用：浮遊せず、スクロールに合わせて下からフワッと現れる動き
     mm.add("(max-width: 1023px)", () => {
       gsap.utils.toArray('.brand-img-item').forEach((el) => {
         gsap.set(el, { clearProps: "all" });
