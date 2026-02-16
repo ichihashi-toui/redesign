@@ -1,7 +1,7 @@
 // src/components/canvas/HeroPhysics.jsx
 import React, { Suspense, useRef, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Environment, useGLTF } from '@react-three/drei';
+import { Environment, useGLTF, ContactShadows } from '@react-three/drei';
 import { Physics, RigidBody, BallCollider, CuboidCollider } from '@react-three/rapier';
 
 const PEDAL_LIST = [
@@ -21,22 +21,37 @@ const PEDAL_LIST = [
   { id: 'fv15', name: 'Tentacle', category: 'アナログオクターブアップ', model: '/models/tentacle.glb', sound: '/audio/fv15.mp3', link: 'https://www.earthquakerdevices.jp/tentacle' },
   { id: 'fv16', name: 'Tone Reaper', category: 'ファズ', model: '/models/reaper.glb', sound: '/audio/fv16.mp3', link: 'https://www.earthquakerdevices.jp/tone-reaper' },
   { id: 'fv17', name: 'Zoar', category: 'ダイナミックディストーション', model: '/models/zoar.glb', sound: '/audio/fv17.mp3', link: 'https://www.earthquakerdevices.jp/zoar' },
-  { id: 'fv18', name: 'Plumes', category: 'オーバードライブ', model: '/models/plumes.glb', sound: '/audio/fv18.mp3', link: 'https://www.earthquakerdevices.jp/plumes' },
+  { id: 'fv18', name: 'Plumes', category: 'オーバードライブ', model: '/models/plumes01.glb', sound: '/audio/fv18.mp3', link: 'https://www.earthquakerdevices.jp/plumes' },
 ];
 
 const HeroPhysics = ({ onSelect }) => {
   const gltfResults = useGLTF(PEDAL_LIST.map(p => p.model));
 
   const ballsData = useMemo(() => {
-    // 🌟 個数を減らして（20個）、リストにある種類を1つずつ出現させます
-    return Array.from({ length: 20 }).map((_, i) => {
+    const totalBalls = 300; 
+    const cols = 15; 
+    const spacingX = 0.75; // 🌟 密度をさらに高めるため間隔を微調整
+    const spacingZ = 0.75;
+    
+    const startX = -((cols - 1) * spacingX) / 2;
+    const startZ = -((Math.ceil(totalBalls / cols) - 1) * spacingZ) / 2;
+
+    return Array.from({ length: totalBalls }).map((_, i) => {
       const modelIndex = i % PEDAL_LIST.length;
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      
       return {
         id: `ball-${i}`,
         data: PEDAL_LIST[modelIndex],
         modelIndex: modelIndex,
-        // 🌟 最初から詰まっているように、低い位置（y: 2〜4）から落とします
-        position: [(Math.random() - 0.5) * 4, 2 + i * 0.4, (Math.random() - 0.5) * 1.5],
+        // 🌟 修正ポイント：高さ（y座標）を空中ではなく「床の直上（-2.05）」に設定
+        // わずかにランダムな高さを足して、自然な重なり感を出します
+        position: [
+          startX + col * spacingX + (Math.random() - 0.5) * 0.2, 
+          -2.05 + (Math.random() * 0.3), 
+          startZ + row * spacingZ + (Math.random() - 0.5) * 0.2
+        ],
         rotation: [Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI],
       };
     });
@@ -45,32 +60,26 @@ const HeroPhysics = ({ onSelect }) => {
   const rigidBodyRefs = useRef([]);
   const clonedScenes = useMemo(() => ballsData.map(ball => gltfResults[ball.modelIndex].scene.clone()), [ballsData, gltfResults]);
 
-  const handleBallClick = (index, data) => {
-    const body = rigidBodyRefs.current[index];
-    if (body) {
-      // 🌟 クリック時の動きも極小に（ピクッとする程度）
-      body.applyImpulse({ x: (Math.random() - 0.5) * 0.5, y: 1.5, z: (Math.random() - 0.5) * 0.5 }, true);
-      if (onSelect) onSelect(data); // 🌟 これでHero.jsxにデータが飛び、右側の情報が切り替わります
-    }
-  };
-
   return (
-    <Canvas camera={{ position: [0, 0, 10], fov: 45 }}>
-      <ambientLight intensity={1.5} />
-      <directionalLight position={[5, 5, 5]} intensity={1} />
-      <Environment preset="city" />
+    <Canvas camera={{ position: [0, 30, 0], fov: 16 }} shadows>
+      <color attach="background" args={['#e5e5e5']} />
+      <ambientLight intensity={1.2} />
+      <directionalLight position={[5, 15, 5]} intensity={2.0} castShadow shadow-bias={-0.0001} />
+      
       <Suspense fallback={null}>
-        <Physics gravity={[0, -20, 0]}> {/* 重力を強くして「ずっしり」させます */}
-          
-          {/* 見えないケース */}
+        <Physics gravity={[0, -40, 0]}>
           <RigidBody type="fixed" colliders={false}>
-            <CuboidCollider position={[0, -3.5, 0]} args={[6, 0.5, 6]} />
-            <CuboidCollider position={[-4.5, 0, 0]} args={[0.5, 10, 6]} />
-            <CuboidCollider position={[4.5, 0, 0]} args={[0.5, 10, 6]} />
-            <CuboidCollider position={[0, 0, -1.5]} args={[6, 10, 0.5]} />
+            <mesh position={[0, -2.7, 0]} receiveShadow>
+              <boxGeometry args={[40, 0.1, 40]} />
+              <meshStandardMaterial color="#e5e5e5" />
+            </mesh>
             
-            {/* 🌟 クリックを邪魔しないよう、手前の壁の当たり判定をさらに奥に逃がしました */}
-            <CuboidCollider position={[0, 0, 4]} args={[6, 10, 0.5]} /> 
+            <CuboidCollider position={[0, -2.45, 0]} args={[20, 0.05, 20]} />
+            
+            <CuboidCollider position={[-6.5, 0, 0]} args={[0.5, 10, 6]} /> 
+            <CuboidCollider position={[6.5, 0, 0]} args={[0.5, 10, 6]} />  
+            <CuboidCollider position={[0, 0, -4.5]} args={[7, 10, 0.5]} /> 
+            <CuboidCollider position={[0, 0, 4.5]} args={[7, 10, 0.5]} />  
           </RigidBody>
 
           {ballsData.map((ball, i) => (
@@ -80,26 +89,33 @@ const HeroPhysics = ({ onSelect }) => {
               colliders={false}
               position={ball.position} 
               rotation={ball.rotation} 
-              restitution={0}     // 🌟 跳ね返り 0（暴れない）
-              friction={1.5}      // 🌟 摩擦を激しく（滑らない）
-              linearDamping={4.0}  // 🌟 空気抵抗（重い動き）
-              angularDamping={4.0}
+              restitution={0}     
+              friction={3.0}       // 🌟 摩擦を上げて滑りを防止
+              linearDamping={15.0} // 🌟 空気抵抗をMAXにして、出現直後にピタッと静止させます
+              angularDamping={15.0}
+              canSleep={true} 
             >
-              <BallCollider args={[0.85]} /> {/* 🌟 当たり判定をモデルに合わせて大きく */}
+              <BallCollider args={[0.4]} />
+
               <group
-                // pointerDownの方が反応が良いことが多いです
                 onPointerDown={(e) => {
                   e.stopPropagation();
-                  handleBallClick(i, ball.data);
+                  if (onSelect) onSelect(ball.data);
                 }}
-                onPointerOver={() => { document.body.style.cursor = 'pointer'; }}
-                onPointerOut={() => { document.body.style.cursor = 'grab'; }}
+                onPointerOver={(e) => {
+                  e.stopPropagation();
+                  document.body.style.cursor = 'pointer';
+                }}
+                onPointerOut={() => {
+                  document.body.style.cursor = 'default';
+                }}
               >
-                {/* 🌟 スケールを 0.4 -> 0.8 に大きくして「ギチギチ感」を出します */}
-                <primitive object={clonedScenes[i]} scale={0.8} />
+                <primitive object={clonedScenes[i]} scale={0.7} />
               </group>
             </RigidBody>
           ))}
+          
+          <ContactShadows position={[0, -2.69, 0]} opacity={0.85} scale={20} blur={1.5} far={3.5} color="#000000" />
         </Physics>
       </Suspense>
     </Canvas>
