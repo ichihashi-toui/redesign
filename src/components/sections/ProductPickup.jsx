@@ -57,7 +57,7 @@ const ProductPickup = () => {
           <div className="model-showcase__frame"></div>
           {/* 追加：canvas-anim クラスをつけてGSAPで動かす */}
           <div className="model-showcase__canvas canvas-anim">
-            <PedalModel modelPath="/models/plumes.glb" />
+            <PedalModel modelPath="models/plumes.glb" />
           </div>
           <div className="drag-guide">
             <div className="drag-guide__icon"></div>

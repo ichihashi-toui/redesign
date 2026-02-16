@@ -72,7 +72,7 @@ const ArtistFeature = () => {
         <div className="model-showcase">
           <div className="model-showcase__frame"></div>
           <div className="model-showcase__canvas canvas-anim">
-            <PedalModel modelPath="/models/gary.glb" />
+            <PedalModel modelPath="models/gary.glb" />
           </div>
           <div className="drag-guide">
             <div className="drag-guide__icon"></div>
