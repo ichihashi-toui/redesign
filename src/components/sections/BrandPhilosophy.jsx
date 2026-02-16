@@ -96,13 +96,13 @@ const BrandPhilosophy = () => {
         <div className="brand-visual">
           <div className="brand-gallery">
             <div className="brand-img-item item-01 float-anim">
-              <img src="/img/common/blandsp.png" alt="Work space" />
+              <img src="img/common/blandsp.png" alt="Work space" />
             </div>
             <div className="brand-img-item item-02 float-anim">
-              <img src="/img/common/brand02.jpg" alt="Silos" />
+              <img src="img/common/brand02.jpg" alt="Silos" />
             </div>
             <div className="brand-img-item item-03 float-anim">
-              <img src="/img/common/brand03.jpg" alt="Jamie Stillman" />
+              <img src="img/common/brand03.jpg" alt="Jamie Stillman" />
             </div>
           </div>
         </div>

@@ -91,32 +91,32 @@ const ArtistFeature = () => {
             className="artist-carousel"
           >
             <SwiperSlide className="artist-card">
-              <div className="artist-card__img"><img src="/img/artists/nakao.webp" alt="中尾憲太郎" /></div>
+              <div className="artist-card__img"><img src="img/artists/nakao.webp" alt="中尾憲太郎" /></div>
               <p className="artist-card__role">Bassist</p>
               <h3 className="artist-card__name">中尾憲太郎</h3>
             </SwiperSlide>
             <SwiperSlide className="artist-card">
-              <div className="artist-card__img"><img src="/img/artists/tabuchi.webp" alt="田淵ひさ子" /></div>
+              <div className="artist-card__img"><img src="img/artists/tabuchi.webp" alt="田淵ひさ子" /></div>
               <p className="artist-card__role">Guitarist</p>
               <h3 className="artist-card__name">田淵ひさ子</h3>
             </SwiperSlide>
             <SwiperSlide className="artist-card">
-              <div className="artist-card__img"><img src="/img/artists/asai.webp" alt="浅井健一" /></div>
+              <div className="artist-card__img"><img src="img/artists/asai.webp" alt="浅井健一" /></div>
               <p className="artist-card__role">Guitarist</p>
               <h3 className="artist-card__name">浅井健一</h3>
             </SwiperSlide>
             <SwiperSlide className="artist-card">
-              <div className="artist-card__img"><img src="/img/artists/goto.webp" alt="後藤正文" /></div>
+              <div className="artist-card__img"><img src="img/artists/goto.webp" alt="後藤正文" /></div>
               <p className="artist-card__role">Guitarist</p>
               <h3 className="artist-card__name">後藤正文</h3>
             </SwiperSlide>
             <SwiperSlide className="artist-card">
-              <div className="artist-card__img"><img src="/img/artists/hinata.webp" alt="日向秀和" /></div>
+              <div className="artist-card__img"><img src="img/artists/hinata.webp" alt="日向秀和" /></div>
               <p className="artist-card__role">Bassist</p>
               <h3 className="artist-card__name">日向秀和</h3>
             </SwiperSlide>
             <SwiperSlide className="artist-card">
-              <div className="artist-card__img"><img src="/img/artists/sekine.webp" alt="関根史織" /></div>
+              <div className="artist-card__img"><img src="img/artists/sekine.webp" alt="関根史織" /></div>
               <p className="artist-card__role">Bassist</p>
               <h3 className="artist-card__name">関根史織</h3>
             </SwiperSlide>

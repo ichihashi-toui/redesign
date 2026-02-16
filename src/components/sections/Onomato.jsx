@@ -33,20 +33,20 @@ const Onomato = () => {
     <section className="section onomato bg-dark" data-header-svg="brand.svg" ref={sectionRef}>
       <div className="container">
         <div className="onomato__logo">
-          <img src="/img/typography/onomatoPedal-Logo_Light.svg" alt="おのとまぺだる" />
+          <img src="img/typography/onomatoPedal-Logo_Light.svg" alt="おのとまぺだる" />
         </div>
         <div className="onomato__grid">
           <a href="https://onomatopedal.com" target="_blank" rel="noopener noreferrer" className="onomato-item item-bukabuka">
-            <img src="/img/onomatopedal/buka-buka.gif" alt="ぶかぶか" />
+            <img src="img/onomatopedal/buka-buka.gif" alt="ぶかぶか" />
           </a>
           <a href="https://onomatopedal.com" target="_blank" rel="noopener noreferrer" className="onomato-item item-pikapika">
-            <img src="/img/onomatopedal/pikapika.gif" alt="ぴかぴか" />
+            <img src="img/onomatopedal/pikapika.gif" alt="ぴかぴか" />
           </a>
           <a href="https://onomatopedal.com" target="_blank" rel="noopener noreferrer" className="onomato-item item-gwongwon">
-            <img src="/img/onomatopedal/gwon-gwon.gif" alt="ぐわんぐわん" />
+            <img src="img/onomatopedal/gwon-gwon.gif" alt="ぐわんぐわん" />
           </a>
           <a href="https://onomatopedal.com" target="_blank" rel="noopener noreferrer" className="onomato-item item-ujauja">
-            <img src="/img/onomatopedal/ujauja.gif" alt="うじゃうじゃ" />
+            <img src="img/onomatopedal/ujauja.gif" alt="うじゃうじゃ" />
           </a>
         </div>
         
