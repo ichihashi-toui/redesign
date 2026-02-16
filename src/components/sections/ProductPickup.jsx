@@ -14,8 +14,8 @@ const ProductPickup = () => {
     const section = sectionRef.current;
     if (!section) return;
 
+    // テキスト群のフェードイン
     const texts = section.querySelectorAll(".plumes-text");
-    
     gsap.fromTo(texts, 
       { opacity: 0, y: 30 },
       {
@@ -30,22 +30,38 @@ const ProductPickup = () => {
         }
       }
     );
+
+    // 3Dモデル自体のフェードイン
+    const canvas = section.querySelector(".canvas-anim");
+    gsap.fromTo(canvas, 
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 70%",
+        }
+      }
+    );
   }, { scope: sectionRef });
 
   return (
-    // bg-lightを追加してグレー背景に
     <section className="section product-pickup bg-light" ref={sectionRef}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '80px', minHeight: '80vh' }}>
         
         {/* 左側：3Dモデルとはみ出し枠のエリア */}
         <div className="model-showcase">
           <div className="model-showcase__frame"></div>
-          <div className="model-showcase__canvas">
+          {/* 追加：canvas-anim クラスをつけてGSAPで動かす */}
+          <div className="model-showcase__canvas canvas-anim">
             <PedalModel modelPath="/models/plumes.glb" />
           </div>
-          {/* 追加：操作ガイド */}
           <div className="drag-guide">
-            <span>⇄ Drag to rotate</span>
+            <div className="drag-guide__icon"></div>
+            <span className="drag-guide__text">360°</span>
           </div>
         </div>
         
@@ -59,7 +75,6 @@ const ProductPickup = () => {
             とても高いヘッドルームさえも得られる立体感の有る歪み。
           </p>
           <div className="btn-wrapper plumes-text" style={{ textAlign: 'left', marginTop: '40px' }}>
-            {/* 新しいボタンのクラスを適用 */}
             <a href="#" className="btn-round-outline">詳細ページへ</a>
           </div>
         </div>

@@ -20,7 +20,6 @@ const ArtistFeature = () => {
     if (!section) return;
 
     const animElements = section.querySelectorAll(".gary-anim");
-    
     gsap.fromTo(animElements, 
       { opacity: 0, y: 30 },
       {
@@ -35,14 +34,29 @@ const ArtistFeature = () => {
         }
       }
     );
+
+    const canvas = section.querySelector(".canvas-anim");
+    gsap.fromTo(canvas, 
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: section,
+          start: "top 70%",
+        }
+      }
+    );
   }, { scope: sectionRef });
 
   return (
-    // ここにも bg-light を追加
     <section className="section artist-feature bg-light" ref={sectionRef}>
+      {/* 🌟 alignItems を 'center' に戻して、縦位置を合わせます */}
       <div className="container" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', minHeight: '80vh' }}>
 
-        {/* 左側：製品情報エリア */}
+        {/* 左側：製品情報エリア（カルーセルはここから出します） */}
         <div className="artist-info" style={{ width: '45%', textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingTop: '0', height: 'auto' }}>
           <p className="artist-role gary-anim" style={{ textAlign: 'left', fontWeight: 'bold', marginBottom: '5px' }}>signature model</p>
           <h2 className="artist-name gary-anim" style={{ textAlign: 'left', fontSize: '4rem', marginBottom: '10px' }}>GARY</h2>
@@ -60,26 +74,27 @@ const ArtistFeature = () => {
         {/* 右側：3Dモデルとはみ出し枠のエリア */}
         <div className="model-showcase">
           <div className="model-showcase__frame"></div>
-          <div className="model-showcase__canvas">
+          <div className="model-showcase__canvas canvas-anim">
             <PedalModel modelPath="/models/gary.glb" />
           </div>
-          {/* 追加：操作ガイド */}
           <div className="drag-guide">
-            <span>⇄ Drag to rotate</span>
+            <div className="drag-guide__icon"></div>
+            <span className="drag-guide__text">360°</span>
           </div>
         </div>
         
-        {/* 下部：アーティストカルーセル */}
-        <div style={{ width: '100%', marginTop: '80px' }}>
+        {/* 🌟 カルーセルを一番下の元の位置に戻しました */}
+        <div className="artist-carousel-wrapper gary-anim" style={{ width: '100%', marginTop: '80px' }}>
           <Swiper 
             modules={[Pagination, FreeMode, Navigation]}
             slidesPerView={'auto'}
-            spaceBetween={0}
+            spaceBetween={20}
             freeMode={true}
             pagination={{ clickable: true }}
             navigation={true}
             className="artist-carousel"
           >
+            {/* スライド */}
             <SwiperSlide className="artist-card">
               <div className="artist-card__img"><img src="/img/artists/nakao.webp" alt="中尾憲太郎" /></div>
               <p className="artist-card__role">Bassist</p>
@@ -115,6 +130,7 @@ const ArtistFeature = () => {
             </SwiperSlide>
           </Swiper>
         </div>
+
       </div>
     </section>
   );

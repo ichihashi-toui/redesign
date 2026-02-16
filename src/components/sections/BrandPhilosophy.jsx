@@ -92,8 +92,8 @@ const BrandPhilosophy = () => {
             オハイオ州アクロンにてすべての工程を社員の手作業で丁寧に行っています。
           </p>
           <div className="btn-wrapper">
-            <a href="#" className="btn-text-link">詳細ページへ</a>
-          </div>
+  <a href="#" className="btn-round-outline btn-light">詳細ページへ</a>
+</div>
         </div>
 
         <div className="brand-visual">

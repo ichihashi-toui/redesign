@@ -1,5 +1,16 @@
+@charset "UTF-8";
+
 /* =======================================================
-   FV (物理演算 + 情報パネル) & オープニング
+   0. ヘッダー調整 (PC表示の上揃え・ガタつき解消)
+   ======================================================= */
+.pc-header__nav, 
+.pc-header__nav ul {
+    display: flex !important;
+    align-items: flex-start !important; /* 要素を上で揃える */
+}
+
+/* =======================================================
+   1. FV (物理演算 + 情報パネル) & オープニング
    ======================================================= */
 .fv-container {
     width: 100%; height: 100vh; display: flex; flex-direction: column;
@@ -7,6 +18,7 @@
 }
 #fv-canvas-container {
     width: 100%; flex: 6; position: relative; overflow: hidden; border-bottom: 1px solid #ddd;
+    pointer-events: auto;
 }
 .fv-info {
     width: 100%; flex: 4; background-color: #fff; padding: 20px; display: flex;
@@ -51,7 +63,7 @@
 #opening-video { width: 100%; height: 100%; object-fit: cover; }
 
 /* =======================================================
-   Crack Transition (画面遷移)
+   2. Crack Transition (画面遷移)
    ======================================================= */
 .crack-transition {
     width: 100%; height: 100vh; position: relative; overflow: hidden;
@@ -60,103 +72,147 @@
 #sequence-crack { width: 100%; height: 100%; display: block; margin: 0 auto; object-fit: cover; }
 
 /* =======================================================
-   FV & 遷移アニメーションのレスポンシブ (PC・タブレット)
+   3. ボタンデザイン
    ======================================================= */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-    .fv-info__msg { font-size: 2rem; }
-    .fv-info__name { font-size: 2.5rem; }
+.btn-round-outline {
+  display: inline-block;
+  padding: 16px 32px;
+  border: 2px solid #111111;
+  border-radius: 50px;
+  color: #111111;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
 }
+.btn-round-outline:hover { background-color: #111111; color: #ffffff; }
+.btn-round-outline.btn-light { border-color: #ffffff; color: #ffffff; }
+.btn-round-outline.btn-light:hover { background-color: #ffffff; color: #111111; }
 
-@media screen and (min-width: 1024px) {
-    .fv-container { height: calc(100vh - 80px); margin-top: 80px; flex-direction: row; }
-    #fv-canvas-container { flex: 6; border-bottom: none; border-right: 1px solid #ddd; }
-    .fv-info { flex: 4; padding: 60px; align-items: flex-start; text-align: left; justify-content: center; }
-    .fv-info__msg { font-size: 2rem; margin-bottom: 20px; }
-    .fv-info__sub { font-size: 1rem; }
-    .fv-info__name { font-size: 3rem; margin-bottom: 10px; line-height: 1.1; }
-    .fv-info__cat { font-size: 1.2rem; margin-bottom: 30px; }
-    .fv-info__actions { justify-content: flex-start; }
-    #opening-video { width: 500px; height: auto; object-fit: contain; }
+/* =======================================================
+   4. アニメーションクラス
+   ======================================================= */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
+.fade-in-canvas { animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; opacity: 0; }
 
-/* 3Dモデルとはみ出し枠共通 */
+/* =======================================================
+   5. モデル表示エリア (ズレの根本修正：絶対中央配置)
+   ======================================================= */
 .model-showcase {
     position: relative; width: 100%; height: 50vh; display: flex;
     align-items: center; justify-content: center; margin-bottom: 40px;
-}
-@media screen and (min-width: 1024px) {
-    .model-showcase { width: 50%; height: 70vh; margin-bottom: 0; }
+    overflow: visible; /* 巨大化したモデルが枠からはみ出せるように */
 }
 .model-showcase__frame {
     position: absolute; top: 15%; bottom: 15%; left: 5%; right: 5%;
     background-color: #fff; border: 1px solid #1D1D1D; z-index: 1;
 }
+
+/* 🌟修正：1.4倍固定 ＆ 右下ズレを絶対に起こさない中央ピン留め設定 */
 .model-showcase__canvas {
-    position: relative; z-index: 2; width: 100%; height: 100%;
-    cursor: grab; touch-action: none;
+    position: absolute; /* 親(model-showcase)に対して絶対配置 */
+    width: 100%; height: 100%;
+    z-index: 2; cursor: grab; touch-action: none;
+    
+    /* 🌟 scale(1.4)で固定。translate(-50%, -50%)で中心を維持し、ズレを封じ込める */
+    transform-origin: center center !important;
+    transform: scale(1); 
 }
+.model-showcase__canvas:active { cursor: grabbing; }
+
 .drag-guide {
-    position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);
-    background-color: rgba(29, 29, 29, 0.8); color: #fff; padding: 8px 20px;
-    border-radius: 30px; font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
-    pointer-events: none; z-index: 10; animation: bounceGuide 2s infinite ease-in-out;
+    position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
+    background-color: #111111; color: #fff; padding: 12px 28px;
+    border-radius: 40px; font-size: 0.95rem; font-weight: 800; letter-spacing: 0.1em;
+    pointer-events: none; z-index: 10; border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    animation: pulseGuide 2s infinite ease-in-out;
 }
-@keyframes bounceGuide {
-    0%, 100% { transform: translate(-50%, 0); }
-    50% { transform: translate(-50%, -8px); }
+@keyframes pulseGuide {
+    0%, 100% { transform: translate(-50%, 0) scale(1); }
+    50% { transform: translate(-50%, -6px) scale(1.05); }
 }
 
-/* Product Pickup & Artist Feature 共通レイアウト */
 .product-pickup .container, .artist-feature .container {
     display: flex; flex-direction: column; align-items: center; gap: 40px; padding-top: 60px;
 }
 .product-info, .artist-info { width: 100%; text-align: center; }
+.title-handwritten, .artist-name { font-weight: 700; font-size: 3rem; line-height: 1.1; margin-bottom: 0.5rem; }
 
+/* =======================================================
+   6. Swiper カルーセル
+   ======================================================= */
+.artist-carousel {
+  --swiper-theme-color: #111111; 
+  width: calc(100% + 20px); margin-right: -20px; margin-top: 40px; padding-bottom: 50px; overflow: hidden;
+}
+.artist-carousel .swiper-button-next, .artist-carousel .swiper-button-prev {
+  width: 54px; height: 54px; background-color: #ffffff; border: 1px solid #dddddd;
+  border-radius: 50%; color: #111111; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); transition: all 0.3s ease;
+}
+.artist-carousel .swiper-button-next:hover, .artist-carousel .swiper-button-prev:hover {
+  background-color: #111111; color: #ffffff; transform: scale(1.05);
+}
+.artist-carousel .swiper-button-next::after, .artist-carousel .swiper-button-prev::after {
+  font-size: 1.2rem; font-weight: 900;
+}
+
+.swiper-slide.artist-card, .swiper-slide.artist-card-more {
+  width: 200px !important; height: auto; box-sizing: border-box; 
+  border: 1px solid #1a1a1a; background: #ffffff; 
+  margin-right: 20px; display: flex; flex-direction: column;
+  align-items: flex-start; justify-content: flex-start; padding: 20px; transition: transform 0.3s ease;
+}
+.artist-card__img { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; margin-bottom: 15px; }
+.artist-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.artist-card__role { font-size: 0.8rem; font-weight: 700; color: #888888; margin-bottom: 5px; text-align: left; }
+.artist-card__name { font-size: 1.1rem; font-weight: 800; line-height: 1.2; text-align: left; }
+.swiper-slide.artist-card-more { align-items: center; justify-content: center; background: #1D1D1D; color: #fff; }
+
+/* =======================================================
+   7. Brand & Onomato
+   ======================================================= */
+.brand-philosophy .container { display: flex; flex-direction: column-reverse; gap: 40px; }
+.brand-text .btn-wrapper { text-align: left; margin-top: 40px; }
+.brand-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
+.brand-img-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+.onomato__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
+
+/* 🌟修正：distributor-text にマージンを追加 */
+.distributor-text { margin-bottom: 10px; }
+
+/* =======================================================
+   8. レスポンシブ: PC (1024px以上)
+   ======================================================= */
 @media screen and (min-width: 1024px) {
+    .fv-container { height: calc(100vh - 80px); margin-top: 80px; flex-direction: row; }
+    #fv-canvas-container { flex: 6; border-bottom: none; border-right: 1px solid #ddd; }
+    .fv-info { flex: 4; padding: 60px; align-items: flex-start; text-align: left; justify-content: center; box-shadow: -10px 0 40px rgba(0, 0, 0, 0.05); }
+    .fv-info__msg { font-size: 2rem; margin-bottom: 20px; }
+    .fv-info__sub { font-size: 1rem; }
+    .fv-info__name { font-size: 3rem; margin-bottom: 10px; line-height: 1.1; }
+    .fv-info__cat { font-size: 1.2rem; margin-bottom: 30px; }
+    .fv-info__actions { justify-content: flex-start; }
+
+    .model-showcase { width: 45%; height: 70vh; margin-bottom: 0; }
     .product-pickup .container { flex-direction: row; justify-content: center; gap: 80px; min-height: 80vh; padding-top: 0; }
     .artist-feature .container { flex-direction: row; justify-content: space-between; gap: 40px; min-height: 80vh; padding-top: 0; }
-    
     .product-info { width: 45%; text-align: left; padding-right: 5%; box-sizing: border-box; }
     .artist-info { width: 45%; text-align: left; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
-}
-
-/* タイキスト周り */
-.title-handwritten, .artist-name { font-weight: 700; font-size: 3rem; line-height: 1.1; margin-bottom: 0.5rem; }
-@media screen and (min-width: 1024px) {
     .title-handwritten, .artist-name { font-size: 4rem; }
-}
 
-/* カルーセル */
-.artist-carousel { width: calc(100% + 20px); margin-right: -20px; margin-top: 40px; padding-bottom: 40px; overflow: hidden; }
-@media screen and (min-width: 1024px) {
-    .artist-carousel { width: 100%; margin-top: 100px; margin-right: 0; overflow: visible; padding-top: 0; }
-}
-.swiper-slide.artist-card, .swiper-slide.artist-card-more {
-    width: auto; height: 175px; box-sizing: border-box; border: 1px solid #1a1a1a;
-    background: #fff; margin-right: 16px; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; padding: 10px 15px; transition: transform 0.3s ease;
-}
-@media screen and (min-width: 1024px) {
-    .swiper-slide.artist-card, .swiper-slide.artist-card-more { width: 288px; height: 352px; padding: 30px 0; }
-    .artist-card__img { width: 224px; height: 224px; margin-bottom: 24px; }
-    .artist-card__role, .artist-card__name { width: 224px; text-align: left; }
-}
-.swiper-slide.artist-card-more { background: #1D1D1D; color: #fff; }
+    .artist-carousel { width: 100%; margin-top: 60px; margin-right: 0; overflow: visible; padding-top: 0; }
+    .swiper-slide.artist-card, .swiper-slide.artist-card-more { width: 320px !important; height: 400px !important; padding: 40px 30px; align-items: flex-start; }
+    .artist-card__img { width: 240px; height: 240px; margin-bottom: 24px; }
+    .swiper-slide.artist-card-more { align-items: center; justify-content: center; }
 
-/* Brand Philosophy */
-.brand-philosophy .container { display: flex; flex-direction: column-reverse; gap: 40px; }
-@media screen and (min-width: 1024px) {
     .section.brand-philosophy { min-height: 100vh; display: flex; align-items: center; padding: 0; }
     .brand-philosophy .container { flex-direction: row; justify-content: space-between; gap: 80px; height: 100%; }
     .brand-text { width: 40%; text-align: left; order: 1; }
     .brand-visual { width: 55%; order: 2; }
-}
-.brand-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; }
-.brand-img-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
-
-/* Onomato */
-.onomato__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
-@media screen and (min-width: 1024px) {
     .onomato .container { display: flex; flex-direction: column; align-items: center; padding-top: 40px; }
     .onomato__logo { width: 390px; margin-bottom: 40px; order: 1; }
     .onomato-desc { max-width: 700px; margin-bottom: 60px; text-align: center; order: 2; }
@@ -164,97 +220,50 @@
     .onomato-item { width: 220px; height: 220px; flex-shrink: 0; }
 }
 
-.fv-section {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-  background-color: #e5e5e5; /* 3D背景と合わせる */
+/* =======================================================
+   9. レスポンシブ: スマホ・タブレット共通 (1024px以下)
+   ======================================================= */
+@media screen and (max-width: 1024px) {
+  .fv-container { flex-direction: column; height: auto; min-height: 100vh; }
+  #fv-canvas-container { height: 50vh; flex: none; }
+  .fv-info { width: 100%; max-width: 100%; height: auto; padding: 60px 60px; box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05); }
+  
+  .product-pickup .container { flex-direction: column !important; gap: 40px !important; padding: 60px 60px !important; min-height: auto !important; }
+  .artist-feature .container { flex-direction: column !important; gap: 40px !important; padding: 60px 60px !important; min-height: auto !important; }
+  .artist-feature .model-showcase { order: 1 !important; }
+  .artist-feature .artist-info { order: 2 !important; }
+  .artist-carousel-wrapper { order: 3 !important; }
+
+  /* 🌟修正：product-info も左揃えに統一 */
+  .product-info, .artist-info { width: 100% !important; text-align: left !important; display: flex; flex-direction: column; align-items: flex-start; }
+  .product-info .product-desc, .product-info .product-category { text-align: left !important; }
+  .product-info .btn-wrapper { text-align: left !important; margin-top: 30px; }
+
+  /* 🌟修正：onomatoロゴ縮小(160px) */
+  .onomato__logo { width: 160px !important; margin: 0 auto 30px; display: block; }
+
+  .model-showcase { width: 100%; height: 500px !important; margin: 0 auto; }
+  .title-handwritten, .artist-name { font-size: 3.5rem !important; }
 }
 
-/* 3Dキャンバスのエリア */
-.fv-canvas-container {
-  flex: 1; /* 残りの幅をすべてキャンバスにする */
-  height: 100%;
-  position: relative;
-  /* クリック操作をキャンバスに貫通させる */
-  pointer-events: auto; 
-}
+/* =======================================================
+   10. レスポンシブ: スマホ (767px以下)
+   ======================================================= */
+@media screen and (max-width: 767px) {
+  .fv-info, .product-pickup .container, .artist-feature .container { padding: 40px 20px !important; }
+  .model-showcase { height: 400px !important; } 
+  .title-handwritten, .artist-name { font-size: 2.5rem !important; }
+  .header-logo img { width: 140px; }
 
-/* 右側の情報パネル */
-.fv-info {
-  width: 400px; /* パネルの横幅 */
-  height: 100%;
-  background-color: #ffffff;
-  padding: 80px 50px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.05); /* 左側にうっすら影を落とす */
-  z-index: 10;
-  position: relative;
-}
-
-/* 初期状態のメッセージ */
-.fv-info__empty {
-  color: #aaaaaa;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-align: center;
-  line-height: 1.6;
-}
-
-/* 情報が表示される時のフワッとするアニメーション */
-.fv-info__content {
-  animation: fadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  .swiper-slide.artist-card, .swiper-slide.artist-card-more {
+      width: 30% !important; padding: 10px !important; margin-right: 10px !important; min-width: 100px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  /* 🌟スマホ版の画像も四角に調整。高さを100pxから、正方形に見えるサイズ(60px)に変更 */
+  .artist-card__img { 
+      width: 100% !important; height: 200px !important; 
+      border-radius: 4px; 
+      margin-bottom: 8px !important; 
   }
-}
-
-/* 洗練されたタイポグラフィ設計 */
-.fv-info__category {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #888888;
-  letter-spacing: 0.08em;
-  margin-bottom: 12px;
-}
-
-.fv-info__title {
-  font-size: 2.8rem;
-  font-weight: 800;
-  color: #111111;
-  line-height: 1.1;
-  margin-bottom: 40px;
-  letter-spacing: -0.02em;
-}
-
-/* ボタンのデザイン */
-.btn-primary {
-  display: inline-block;
-  padding: 18px 36px;
-  background-color: #111111;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  border-radius: 4px; /* 少しだけ丸みを持たせる */
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.btn-primary:hover {
-  background-color: #333333;
-  transform: translateY(-2px); /* ホバーで少し浮く */
+  .artist-card__name { font-size: 0.75rem !important; }
+  .artist-card__role { font-size: 0.6rem !important; }
 }
